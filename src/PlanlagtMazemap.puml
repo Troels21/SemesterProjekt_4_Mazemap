@@ -1,0 +1,18 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+participant Estimote_API as estimote
+participant Ibeacon as Ibeacon
+database Firestore as firestore
+participant Mazemap_API as mazemap
+
+
+autonumber
+
+estimote -> Ibeacon :find beacon
+Ibeacon --> estimote : send key
+estimote -> estimote : get beaconID
+estimote -> firestore : query beaconID
+firestore --> estimote : return Lng/Lat
+estimote -> mazemap : send Lng/Lat
+mazemap -> mazemap :move bluedot
+@enduml

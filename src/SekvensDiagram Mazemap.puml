@@ -1,0 +1,27 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+participant Estimote_API as estimote
+participant Ibeacon as Ibeacon
+database Firestore as firestore
+participant Notifikation as notifikation
+actor Bruger as Bruger
+participant Mazemap_API as mazemap
+
+
+autonumber
+
+group Beacon app
+estimote -> Ibeacon :find beacon
+Ibeacon --> estimote : send key
+estimote -> estimote : get beaconID
+estimote -> firestore : query beaconID
+firestore --> estimote : return beacon number
+estimote ->notifikation : beacon number
+end
+notifikation -> Bruger : beacon Number
+Bruger -> mazemap : pick number
+group Mazemap app
+mazemap -> mazemap :move bluedot
+end
+
+@enduml
